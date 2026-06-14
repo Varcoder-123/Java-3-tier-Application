@@ -7,15 +7,14 @@ resource "azurerm_linux_virtual_machine" "vm" {
   size = "Standard_B2ls_v2"
 
   admin_username = "azureuser"
+  
+  admin_password = data.azurerm_key_vault_secret.vm_password.value
+
+  disable_password_authentication = false
 
   network_interface_ids = [
     azurerm_network_interface.app_nic.id
   ]
-
-  admin_ssh_key {
-    username   = "azureuser"
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
 
   os_disk {
     caching              = "ReadWrite"
