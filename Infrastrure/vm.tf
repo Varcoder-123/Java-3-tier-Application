@@ -8,7 +8,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   admin_username = "azureuser"
   
-  admin_password = data.azurerm_key_vault_secret.vm_password.value
+  admin_password = "Vicky1867@123"
 
   disable_password_authentication = false
 
