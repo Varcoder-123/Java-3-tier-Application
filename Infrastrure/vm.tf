@@ -8,7 +8,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   admin_username = "azureuser"
   
-  admin_password = "Vicky1867@123"
+  admin_password = var.vm_password
 
   disable_password_authentication = false
 

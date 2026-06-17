@@ -28,4 +28,16 @@ resource "azurerm_subnet" "db_subnet" {
   virtual_network_name = azurerm_virtual_network.vnet.name
 
   address_prefixes = ["10.0.3.0/24"]
+
+    delegation {
+    name = "mysql-delegation"
+
+    service_delegation {
+      name = "Microsoft.DBforMySQL/flexibleServers"
+
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action"
+      ]
+    }
+  }  
 }
