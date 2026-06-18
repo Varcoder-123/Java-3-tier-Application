@@ -37,13 +37,13 @@
 		    <groupId>org.apache.tomcat</groupId>
 		    <artifactId>tomcat-jasper</artifactId>
 		    <version>9.0.31</version>
-			<scope>provided</scope>
+			<scope>provided</scope> <!-- blocked the jasper in-built as tomcate already have it because of this i was not able to deploy the proj-->
 		</dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.33</version>
+			<version>8.0.33</version> <!-- Specified the mysql version as i was getting the error here-->
 			<scope>runtime</scope>
 		</dependency>
 		
