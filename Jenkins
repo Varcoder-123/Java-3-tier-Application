@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven3'
+        jdk 'jdk17'
+    }
+
+    stages {
+        stage('git hub') {
+            steps {
+                echo 'pulling the code'
+                git 'https://github.com/Varcoder-123/projects.git'
+            }
+        }
+        stage('Build and package') {
+            steps {
+                echo 'Building the code'
+                dir('Java-Login-App') {
+                    sh 'mvn clean package -T 1C -DskipTests'
+                }
+            }
+        }
+        stage('tomcat deployment') {
+            steps {
+                script {
+                echo 'tomcat deployment'
+                sh "sudo cp Java-Login-App/target/dptweb-1.0.war /home/Vicky/apache-tomcat-9.0.118/webapps"
+                }
+            }
+        }
+    }
+}
