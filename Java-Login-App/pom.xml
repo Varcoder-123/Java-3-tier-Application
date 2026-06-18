@@ -37,6 +37,7 @@
 		    <groupId>org.apache.tomcat</groupId>
 		    <artifactId>tomcat-jasper</artifactId>
 		    <version>9.0.31</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
