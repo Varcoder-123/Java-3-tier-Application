@@ -36,10 +36,10 @@ public class login {
 		
 		Class.forName("com.mysql.jdbc.Driver");
 		// validate user credentials
-		String query = "select * from Employee where username='" + userName + "' and password='"+password+"'";
+		String query = "select * from Employee where username='" + userName + "' and password='"+password+"'"; //Fetch the details from the database
 		try (Connection con = DriverManager.getConnection(url, DBusername, DBpassword);
-				Statement st = con.createStatement();
-				ResultSet rs = st.executeQuery(query)) {
+				Statement st = con.createStatement(); //Connection & Statement, both are related to database connectivity
+				ResultSet rs = st.executeQuery(query)) { //Executed query will be stored temporary here
 			if (rs.next()) {
 				System.out.println(
 						rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
