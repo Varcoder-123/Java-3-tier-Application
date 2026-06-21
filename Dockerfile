@@ -1,4 +1,4 @@
-FROM openjdk:17
+FROM eclipse-temurin:17-jre
 
 # Copies the file and forces its name to be 'app.war' inside the container
 COPY Java-Login-App/target/*.war /app/app.war
