@@ -36,7 +36,8 @@
 		<dependency>
 		    <groupId>org.apache.tomcat</groupId>
 		    <artifactId>tomcat-jasper</artifactId>
-		    <version>9.0.83</version>
+		    <version>9.0.31</version>
+			<scope>provided</scope> <!-- blocked the jasper in-built as tomcate already have it because of this i was not able to deploy the proj-->
 		</dependency>
 
 		<dependency>
