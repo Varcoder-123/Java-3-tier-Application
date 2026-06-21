@@ -102,3 +102,20 @@ While building the application, issues were encountered with the following depen
 After analyzing the dependency configuration, the required modifications were made within the `pom.xml` file, resulting in a successful build and deployment process.
 
 ---
+
+
+during the docker image creation , i found that openjdk:17 was been deprecated so i changed to the eclipse-temurin:17-jre image
+
+once i created the container i was unable to see the webpage even after NSG configure , so i checked the logs of the container and found Tomcat dependency version mismatch (JAR hell) inside your application. To resolve this i need to change the version of the tomcat-jasper along with remove the <scope>provided</scope>
+
+Due to this issue i was also able to perform roll-back through git
+
+I was not able to login to the page, as i was searching for the username and the password for this page. later i that it was the Spring Security's default login form handles the request. user is the username & password was been provided by the Spring Security
+<img width="619" height="409" alt="image" src="https://github.com/user-attachments/assets/5f155fcb-c26c-405d-adec-06294dcb442d" />
+
+Even if i able to login ,  i was getting in to the wrong page 
+<img width="1691" height="324" alt="image" src="https://github.com/user-attachments/assets/2d6d9516-668f-4a6c-bdc9-7b9ab363e36a" />
+
+
+
+
