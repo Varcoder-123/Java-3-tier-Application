@@ -116,6 +116,8 @@ I was not able to login to the page, as i was searching for the username and the
 Even if i able to login ,  i was getting in to the wrong page 
 <img width="1691" height="324" alt="image" src="https://github.com/user-attachments/assets/2d6d9516-668f-4a6c-bdc9-7b9ab363e36a" />
 
+Currently i have disabled the Spring Security by removing the spring-boot-starter-security in pom.xml file
+
 
 
 
