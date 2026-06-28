@@ -6,7 +6,7 @@ resource "azurerm_network_interface" "app_nic" {
 
   ip_configuration {
 
-    name = "internal"
+    name = "internal" #This is the label for the IP configuration
 
     subnet_id = azurerm_subnet.app_subnet.id
 
