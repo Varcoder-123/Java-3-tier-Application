@@ -26,14 +26,16 @@ pipeline {
                 }
             }
         }
-        // stage('tomcat deployment') {
-        //     steps {
-        //         script {
-        //         echo 'tomcat deployment'
-        //         sh "sudo cp Java-Login-App/target/dptweb-1.0.war /home/Vicky/apache-tomcat-9.0.118/webapps"
-        //         }
-        //     }
-        // }
+        stage('SonarQube Analysis') {
+            steps {
+                echo 'Analysis completed'
+                dir('Java-Login-App') {
+                    withSonarQubeEnv('Sonar-qube-servers') {
+                    sh 'mvn sonar:sonar'
+                }
+              }
+            }
+        }
         stage('Docker image') {
             steps {
                 script{

@@ -51,3 +51,5 @@ resource "azurerm_subnet_network_security_group_association" "app_subnet_assoc" 
 
   network_security_group_id = azurerm_network_security_group.app_nsg.id #security group
 }
+
+#NSG is attached to the subnet rather than the nic level becaue of the scalability and centralized governance. 
