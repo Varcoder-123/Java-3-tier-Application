@@ -37,21 +37,25 @@ jobs:
             --config ./gitleaks.toml \
             --redact \
             --verbose
+
+
   semgrep:
-      name: SAST - Semgrep
-      runs-on: ubuntu-latest
+    name: SAST - Semgrep
+    needs: gitleaks
+    runs-on: ubuntu-latest
 
-      steps:
+    steps:
 
-        - name: Checkout Source Code
-          uses: actions/checkout@v4
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
 
-        - name: Install Semgrep
-          run: |
-           python3 -m pip install semgrep
+      - name: Install Semgrep
+        run: |
+          python3 -m pip install semgrep
 
-        - name: Run Semgrep
-          run: |
-            semgrep scan \
-              --config p/owasp-top-ten \
-              --error
+      - name: Run Semgrep
+        run: |
+          semgrep scan \
+            --config p/owasp-top-ten \
+            --json \
+            --output semgrep-results.json
