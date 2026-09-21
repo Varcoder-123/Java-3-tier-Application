@@ -14,3 +14,11 @@ keywords = [
     "pass"
 ]
 
+[rules.allowlist]
+description = "Terraform references are not hardcoded secrets"
+
+regexTarget = "line"
+
+regexes = [
+    '''(?i)\b(?:var\.[a-zA-Z0-9_.-]+|data\.azurerm_key_vault_secret\.[a-zA-Z0-9_.-]+\.value)\b'''
+]
