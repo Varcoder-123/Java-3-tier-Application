@@ -56,8 +56,7 @@ jobs:
         run: |
           semgrep scan \
             --config p/owasp-top-ten \
-            --json \
-            --output semgrep-results.json
+            --error 
 
   build:
     name: Build Application
@@ -103,13 +102,9 @@ jobs:
           exit-code: '0'
 
       - name: Trivy Critical Vulnerability Gate
-        uses: aquasecurity/trivy-action@v0.36.0
-        with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'table'
-          scanners: 'vuln'
-          severity: 'CRITICAL'
-          ignore-unfixed: false
-          exit-code: '1'
-          skip-setup-trivy: true           
+        run: |
+          trivy fs . \
+            --scanners vuln \
+            --severity CRITICAL \
+            --exit-code 1 \
+            --ignore-unfixed=false          
