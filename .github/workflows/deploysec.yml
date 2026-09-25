@@ -56,8 +56,7 @@ jobs:
         run: |
           semgrep scan \
             --config p/owasp-top-ten \
-            --json \
-            --output semgrep-results.json
+            --error
 
   build:
     name: Build Application
