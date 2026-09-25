@@ -99,12 +99,4 @@ jobs:
           scan-ref: '.'
           format: 'table'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-          exit-code: '0'
-
-      - name: Trivy Critical Vulnerability Gate
-        run: |
-          trivy fs . \
-            --scanners vuln \
-            --severity CRITICAL \
-            --exit-code 1 \
-            --ignore-unfixed=false          
+          exit-code: '1'
