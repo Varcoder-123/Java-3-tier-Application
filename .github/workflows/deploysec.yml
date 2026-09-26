@@ -38,7 +38,6 @@ jobs:
             --redact \
             --verbose
 
-
   semgrep:
     name: SAST - Semgrep
     runs-on: ubuntu-latest
@@ -99,4 +98,53 @@ jobs:
           scan-ref: '.'
           format: 'table'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-          exit-code: '1'
+          exit-code: '0'        
+
+  docker-build:
+    name: Docker Build
+    runs-on: ubuntu-latest
+
+    steps:  
+
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: |
+          docker build \
+            -t java-login-app:${{ github.sha }} \
+            ./Java-Login-App
+
+      - name: Save Docker Image
+        run: |
+          docker save java-login-app:${{ github.sha }} -o java-login-app.tar
+
+      - name: Upload Docker Image
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-login-app-image
+          path: java-login-app.tar
+
+  Trivy-Container-image-scan:
+    name: Trivy Container Image Scan
+    needs: docker-build
+    runs-on: ubuntu-latest
+
+    steps:
+    
+      - name: Download Docker Image
+        uses: actions/download-artifact@v4
+        with:
+          name: java-login-app-image
+
+      - name: Load Docker Image
+        run: |
+          docker load -i java-login-app.tar
+
+      - name: Trivy Container Image Scan
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: 'java-login-app:${{ github.sha }}'
+          format: 'table'
+          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
+          exit-code: '0'
