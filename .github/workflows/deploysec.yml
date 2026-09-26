@@ -113,7 +113,7 @@ jobs:
         run: |
           docker build \
             -t java-login-app:${{ github.sha }} \
-            ./Java-Login-App
+            .
 
       - name: Save Docker Image
         run: |
