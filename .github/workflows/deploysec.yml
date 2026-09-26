@@ -131,6 +131,17 @@ jobs:
           docker build \
             -t java-login-app:${{ github.sha }} \
             .
+      - name: Save Docker Image
+        run: |
+          docker save \
+            java-login-app:${{ github.sha }} \
+            -o java-login-app.tar
+
+      - name: Upload Docker Image
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-login-app-image
+          path: java-login-app.tar      
 
   Trivy-Container-image-scan:
     name: Trivy Container Image Scan
@@ -142,16 +153,25 @@ jobs:
       - name: Download Docker Image
         uses: actions/download-artifact@v4
         with:
-          name: java-login-app-war
+          name: java-login-app-image
+
+      - name: Verify Docker Image Artifact
+        run: |
+          ls -lh
+          file java-login-app.tar    
 
       - name: Load Docker Image
         run: |
-          docker load -i java-login-app-war.tar
+          docker load -i java-login-app.tar
+
+      - name: Verify Docker Image
+        run: |
+          docker images    
 
       - name: Trivy Container Image Scan
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: 'java-login-app-war:${{ github.sha }}'
+          image-ref: 'java-login-app:${{ github.sha }}'
           format: 'table'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
           exit-code: '0'
