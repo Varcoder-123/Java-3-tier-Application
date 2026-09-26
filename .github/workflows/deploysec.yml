@@ -146,12 +146,12 @@ jobs:
 
       - name: Load Docker Image
         run: |
-          docker load -i java-login-app.tar
+          docker load -i java-login-app-war.tar
 
       - name: Trivy Container Image Scan
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: 'java-login-app:${{ github.sha }}'
+          image-ref: 'java-login-app-war:${{ github.sha }}'
           format: 'table'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
           exit-code: '0'
