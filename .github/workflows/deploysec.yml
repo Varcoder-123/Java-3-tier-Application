@@ -83,6 +83,12 @@ jobs:
         run: |
           mvn test
 
+      - name: Upload WAR Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-login-app-war
+          path: Java-Login-App/target/*.war    
+
   trivy-dependency-scan:
     name: Trivy Dependency Scan
     runs-on: ubuntu-latest
@@ -98,7 +104,7 @@ jobs:
           scan-ref: '.'
           format: 'table'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-          exit-code: '0'        
+          exit-code: '1'        
 
   docker-build:
     name: Docker Build
@@ -109,21 +115,21 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
 
+      - name: Download WAR Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: java-login-app-war
+          path: Java-Login-App/target
+
+      - name: Verify WAR File
+        run: |
+          ls -lh Java-Login-App/target
+
       - name: Build Docker Image
         run: |
           docker build \
             -t java-login-app:${{ github.sha }} \
             .
-
-      - name: Save Docker Image
-        run: |
-          docker save java-login-app:${{ github.sha }} -o java-login-app.tar
-
-      - name: Upload Docker Image
-        uses: actions/upload-artifact@v4
-        with:
-          name: java-login-app-image
-          path: java-login-app.tar
 
   Trivy-Container-image-scan:
     name: Trivy Container Image Scan
