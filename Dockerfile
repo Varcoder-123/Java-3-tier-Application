@@ -1,9 +1,15 @@
 FROM eclipse-temurin:17-jre
 
-# Copies the file and forces its name to be 'app.war' inside the container
+RUN useradd --system --create-home --shell /usr/sbin/nologin appuser
+
+WORKDIR /app
+
 COPY Java-Login-App/target/*.war /app/app.war
+
+RUN chown -R appuser:appuser /app
+
+USER appuser
 
 EXPOSE 5555
 
-# Now your startup command works every single time, even if your project version changes!
 CMD ["java", "-jar", "/app/app.war"]
