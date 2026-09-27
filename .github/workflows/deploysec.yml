@@ -174,4 +174,33 @@ jobs:
           image-ref: 'java-login-app:${{ github.sha }}'
           format: 'table'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-          exit-code: '0'
+          exit-code: '1'
+
+  syft-sbom:
+    name: Generate SBOM
+    needs: docker-build
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Download Docker Image
+        uses: actions/download-artifact@v4
+        with:
+          name: java-login-app-image
+
+      - name: Load Docker Image
+        run: |
+          docker load -i java-login-app.tar
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          image: 'java-login-app:${{ github.sha }}'
+          format: cyclonedx-json
+          output-file: sbom.json
+
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-login-app-sbom
+          path: sbom.json        
