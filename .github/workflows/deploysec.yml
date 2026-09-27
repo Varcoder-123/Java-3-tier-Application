@@ -131,6 +131,12 @@ jobs:
           docker build \
             -t java-login-app:${{ github.sha }} \
             .
+      
+      - name: Verify Container Runs as Non-Root
+        run: |
+          docker inspect java-login-app:${{ github.sha }} \
+            --format='{{.Config.User}}'
+
       - name: Save Docker Image
         run: |
           docker save \
@@ -220,4 +226,4 @@ jobs:
           directory: .
           framework: terraform
           output_format: cli
-          soft_fail: true                
+          soft_fail: false                
